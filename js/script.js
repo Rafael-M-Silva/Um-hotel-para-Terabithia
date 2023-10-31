@@ -7,7 +7,7 @@ const senha = 2678;
 
 const menu = () => {
   let opcao = window.prompt(`
-    1: para chamar a func 1.
+    1: Reserva de quartos.
     2: para chamar a func 2.
     3: para chamar a func 3.
     4: para chamar a func 4.
@@ -61,10 +61,52 @@ const sair = () => {
   alert(`Muito obrigado e até logo, ${nomeUsuario}.`);
 };
 
+// INICIO RESERVA QUARTO
+
 const reservaQuarto = () => {
-  alert("funcao reservar quarto");
-  inicio();
+  const valorDiaria = promptForNumber("Qual o valor padrão da diária?");
+  const quantasDiarias = promptForNumber("Quantas diárias serão necessárias?");
+
+  if (valorDiaria < 0 || quantasDiarias < 0) {
+    window.alert(`Valor inválido, ${nomeUsuario}`);
+    menu();
+    return;
+  }
+
+  const valorDiarias = (valorDiaria * quantasDiarias)
+    .toFixed(2)
+    .replace(".", ",");
+  alert(`O valor de ${valorDiaria} dias de hospedagem é de R$${valorDiarias}`);
+  const nomeHospede = window.prompt("Qual o nome do hóspede?");
+  const confirmacaoHospede = window
+    .prompt(
+      `${nomeUsuario}, você confirma a hospedagem para ${nomeHospede} por ${quantasDiarias} dias? S/N`
+    )
+    .toUpperCase();
+
+  if (confirmacaoHospede == "S") {
+    alert(
+      `${nomeUsuario}, reserva efetuada para ${nomeHospede}. O valor total é de R$${valorDiarias}.`
+    );
+  } else if (confirmacaoHospede == "N") {
+    alert(`${nomeUsuario}, reserva não efetuada`);
+    menu();
+  }
+
+  menu();
 };
+
+const promptForNumber = (message) => {
+  let checkMessage;
+
+  do {
+    checkMessage = parseFloat(window.prompt(message));
+  } while (isNaN(checkMessage));
+
+  return checkMessage;
+};
+
+// FIM RESERVA QUARTO
 
 const cadastroHospede = () => {
   alert("funcao cadastroHospede");

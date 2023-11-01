@@ -8,7 +8,7 @@ const senha = 2678;
 const menu = () => {
   let opcao = window.prompt(`
     1: Reserva de quartos.
-    2: para chamar a func 2.
+    2: Cadastrar Hospede.
     3: para chamar a func 3.
     4: para chamar a func 4.
     5: para chamar a func 5.
@@ -22,7 +22,7 @@ const menu = () => {
       reservaQuarto();
       break;
     case "2":
-      cadastroHospede();
+      valorCadastroHospede();
       break;
     case "3":
       pesquisaHospede();
@@ -62,7 +62,6 @@ const sair = () => {
 };
 
 // INICIO RESERVA QUARTO
-
 const reservaQuarto = () => {
   const valorDiaria = promptForNumber("Qual o valor padrão da diária?");
   const quantasDiarias = promptForNumber("Quantas diárias serão necessárias?");
@@ -96,6 +95,58 @@ const reservaQuarto = () => {
   menu();
 };
 
+
+// FIM RESERVA QUARTO
+
+/* INICIO CADASTRO HOSPEDE */
+let hospedeCadastrado = [];
+let valorTotal = 0;
+let gratuidade = 0;
+let meia = 0;
+
+const valorCadastroHospede = () => {
+  const valorPadraoDiaria = promptForNumber("Qual o valor padrão da diária?");
+  cadastroHospede(valorPadraoDiaria)
+};
+
+const cadastroHospede = (valorPadraoDiaria) => {
+  const nomeHospede = window.prompt("Qual o nome do Hóspede?");
+  const precoFixo = Number(valorPadraoDiaria)
+
+  if (nomeHospede.toUpperCase() == "PARE") {
+    alert(`
+      ${nomeUsuario}, o valor total das hospedagens é: R$${valorTotal}
+      ${hospedeCadastrado.length} hospede cadastrado(s)
+      ${gratuidade} gratuidade(s)
+      ${meia} meia(s)
+    `);
+    menu();
+    return;
+  }
+  hospedeCadastrado.push(nomeHospede);
+
+
+  const idadeHospede = promptForNumber("Qual a idade do Hóspede?");
+
+  if (idadeHospede <= 6) {
+    alert(
+      `${nomeHospede} cadastrada(o) com sucesso. ${nomeHospede} possui gratuidade`
+    );
+    gratuidade++;
+  } else if (idadeHospede < 82) {
+    valorTotal += precoFixo;
+    alert(`${nomeHospede} cadastrada(o) com sucesso.`);
+  } else if (idadeHospede >= 82) {
+    valorTotal += precoFixo / 2;
+    alert(`${nomeHospede} cadastrada(o) com sucesso. ${nomeHospede} paga meia`);
+    meia++;
+  }
+
+  cadastroHospede(valorPadraoDiaria)
+}
+/* FIM CADASTRO HOSPEDE */
+
+
 const promptForNumber = (message) => {
   let checkMessage;
 
@@ -105,14 +156,6 @@ const promptForNumber = (message) => {
 
   return checkMessage;
 };
-
-// FIM RESERVA QUARTO
-
-const cadastroHospede = () => {
-  alert("funcao cadastroHospede");
-  inicio();
-};
-
 const pesquisaHospede = () => {
   alert("funcao pesquisaHospede");
   inicio();

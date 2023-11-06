@@ -9,7 +9,7 @@ const menu = () => {
   let opcao = window.prompt(`
     1: Reserva de quartos.
     2: Cadastrar Hospede.
-    3: para chamar a func 3.
+    3: Cadastro/Pesquisa Hospede.
     4: para chamar a func 4.
     5: para chamar a func 5.
     6: para chamar a func 6.
@@ -59,6 +59,7 @@ const inicio = () => {
 
 const sair = () => {
   alert(`Muito obrigado e até logo, ${nomeUsuario}.`);
+  window.exit()
 };
 
 // INICIO RESERVA QUARTO
@@ -99,7 +100,6 @@ const reservaQuarto = () => {
 // FIM RESERVA QUARTO
 
 /* INICIO CADASTRO HOSPEDE */
-let hospedeCadastrado = [];
 let valorTotal = 0;
 let gratuidade = 0;
 let meia = 0;
@@ -116,14 +116,12 @@ const cadastroHospede = (valorPadraoDiaria) => {
   if (nomeHospede.toUpperCase() == "PARE") {
     alert(`
       ${nomeUsuario}, o valor total das hospedagens é: R$${valorTotal}
-      ${hospedeCadastrado.length} hospede cadastrado(s)
       ${gratuidade} gratuidade(s)
       ${meia} meia(s)
     `);
     menu();
     return;
   }
-  hospedeCadastrado.push(nomeHospede);
 
 
   const idadeHospede = promptForNumber("Qual a idade do Hóspede?");
@@ -156,10 +154,57 @@ const promptForNumber = (message) => {
 
   return checkMessage;
 };
+
+
+
+
+/* INICIO PESQUISA HOSPEDE */
+let hospedeCadastrado = [];
+const cadastrar = () => {
+  const nomeHospede = window.prompt('Qual o nome do Hóspede?')
+
+  if (nomeHospede === null || nomeHospede.trim() === '') {
+    alert('Nome inválido. Tente novamente.')
+    cadastrar()
+  }
+
+  if (hospedeCadastrado.length >= 15) {
+    alert('Máximo de cadastros atingido')
+    pesquisaHospede()
+  }
+
+  hospedeCadastrado.push(nomeHospede)
+  alert(`Hóspede ${nomeHospede} foi cadastrada(o) com sucesso!`)
+  pesquisaHospede()
+}
+
 const pesquisaHospede = () => {
-  alert("funcao pesquisaHospede");
-  inicio();
+  const opcaoUsuario = window.prompt(`
+  1: Cadastrar.
+  2: Pesquisar.
+  3: Listar.
+  4: Sair.
+  `)
+
+  switch (opcaoUsuario) {
+    case '1':
+      cadastrar()
+      break;
+    case '2':
+      pesquisar()
+      break;
+    case '3':
+      listar()
+      break
+    case '4':
+      sair()
+      break;
+    default:
+      alert("Digito invalido! Vamos tentar novamente :)");
+      pesquisaHospede();
+  }
 };
+/* FINAL PESQUISA HOSPEDE */
 
 /* Eventos do hotel */
 
@@ -173,9 +218,9 @@ const buffetHotel = () => {
   inicio();
 };
 
-const auditorioEvento = () => {};
+const auditorioEvento = () => { };
 
-const dataEvento = () => {};
+const dataEvento = () => { };
 
 const abastecerCarro = () => {
   alert("funcao abastecerCarro");

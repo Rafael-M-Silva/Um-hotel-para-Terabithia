@@ -178,6 +178,23 @@ const cadastrar = () => {
   pesquisaHospede()
 }
 
+const pesquisar = () => {
+  const nomeHospede = window.prompt('Qual o nome do Hóspede?')
+  for(var i = 0; i < hospedeCadastrado.length; i++) {
+    if(hospedeCadastrado[i] == nomeHospede){
+      alert(`Hóspede ${hospedeCadastrado[i]} foi encontrada(o)!`)
+      pesquisaHospede()
+    }
+  }
+  alert(`Hóspede ${nomeHospede} não foi encontrada(o)!`)
+    pesquisaHospede()
+}
+
+const listar = () => {
+  alert(`${hospedeCadastrado}`)
+  pesquisaHospede()
+}
+
 const pesquisaHospede = () => {
   const opcaoUsuario = window.prompt(`
   1: Cadastrar.
